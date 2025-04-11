@@ -59,6 +59,7 @@
     "dotnet.defaultSolution": "UnityProject.sln",
     "svn.ignoreMissingSvnWarning": true,
     "cSpell.words": [
+        "Behaviour",
         "Datas",
         "Prefs",
         "UGUI"

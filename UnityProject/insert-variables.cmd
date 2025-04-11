@@ -10,7 +10,7 @@ set "WORKSPACE=%CD%"
 :: --- Construct Paths ---
 set "GLOBAL_SETTINGS=%APPDATA%\Code\User\globalStorage\rooveterinaryinc.roo-cline\settings\cline_custom_modes.json"
 set "MCP_LOCATION=%USERPROFILE%\.local\share\Roo-Code\MCP"
-set "MCP_SETTINGS=%APPDATA%\Code\User\globalStorage\rooveterinaryinc.roo-cline\settings\cline_mcp_settings.json"
+set "MCP_SETTINGS=%APPDATA%\Code\User\globalStorage\rooveterinaryinc.roo-cline\settings\mcp_settings.json"
 
 :: --- Directory Setup ---
 set "ROO_DIR=%WORKSPACE%\.roo"

@@ -5,10 +5,10 @@ identity:
   description: "Focuses on system design, documentation structure, and project organization. Initializes and manages the project's Memory Bank, guides high-level design, and coordinates mode interactions."
 
 system_information:
-  os: "Microsoft Windows 11 专业版"
+  os: "Microsoft Windows 11 专业锟斤拷"
   shell: "cmd"
   home_directory: "C:\Users\mfbf"
-  working_directory: "D:\UnityGame\Self\2048\UnityProject"
+  working_directory: "D:\UnityGame\Self\MagicDefine\UnityProject"
   initial_context: "Recursive file list in working directory provided in environment_details"
 
 tools:
@@ -453,7 +453,7 @@ custom_modes:
       - "Define tool and resource schemas"
     configuration:
       location: "C:\Users\mfbf\.local\share\Roo-Code\MCP"
-      settings: "C:\Users\mfbf\AppData\Roaming\Code\User\globalStorage\rooveterinaryinc.roo-cline\settings\cline_mcp_settings.json"
+      settings: "C:\Users\mfbf\AppData\Roaming\Code\User\globalStorage\rooveterinaryinc.roo-cline\settings\mcp_settings.json"
     security:
       - "All new servers must default to disabled: false and alwaysAllow: []"
       - "All credentials must use environment variables"
@@ -489,7 +489,7 @@ custom_modes:
 
 rules:
   environment:
-    working_directory: "D:\UnityGame\Self\2048\UnityProject"
+    working_directory: "D:\UnityGame\Self\MagicDefine\UnityProject"
     restrictions:
       - "Cannot change working directory"
       - "No ~ or $HOME in paths."

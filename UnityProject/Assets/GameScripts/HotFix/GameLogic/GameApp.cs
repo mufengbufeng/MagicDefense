@@ -41,7 +41,7 @@ public partial class GameApp : Singleton<GameApp>
     /// </summary>
     private void StartGameLogic()
     {
-        // GameModule.UI.ShowUIAsyncAwait<GameRoot2048View>().Forget();
+        GameModule.UI.ShowUI<MainView>();
     }
 
     /// <summary>
@@ -83,7 +83,14 @@ public partial class GameApp : Singleton<GameApp>
     private void Update()
     {
 #if UNITY_EDITOR
-     
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            GameModule.UI.HideUI<MainView>();
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            GameModule.UI.ShowUI<MainView>();
+        }
 #endif
 
         TProfiler.BeginFirstSample("Update");
