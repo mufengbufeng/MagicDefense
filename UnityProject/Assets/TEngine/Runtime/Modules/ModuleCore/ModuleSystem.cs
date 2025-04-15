@@ -88,7 +88,7 @@ namespace TEngine
 
             GameModule.Shutdown(shutdownType);
             GameEvent.Shutdown();
-            
+
             if (shutdownType == ShutdownType.None)
             {
                 return;
@@ -117,7 +117,7 @@ namespace TEngine
         {
             if (module == null)
             {
-                Log.Error("TEngine Module is invalid.");
+                Log.Error("Module is invalid.");
                 return;
             }
 

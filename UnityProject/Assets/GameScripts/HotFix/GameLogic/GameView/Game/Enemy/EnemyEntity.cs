@@ -9,7 +9,7 @@ namespace GameLogic
     /// <summary>
     /// EnemyEntity 类用于表示敌方角色的基本属性和行为。
     /// </summary>
-    public class EnemyEntity : MonoBehaviour
+    public class EnemyEntity : MonoBehaviour, ISkillTargetEntity
     {
         /// <summary>
         /// 敌人死亡事件
@@ -53,7 +53,7 @@ namespace GameLogic
 
         public IFsm<EnemyEntity> Fsm { get; set; }
 
-        private void Awake()
+        void Awake()
         {
             // 获取碰撞体
             Collider = GetComponent<AABBCollider>();
@@ -78,11 +78,7 @@ namespace GameLogic
 
         private void Start()
         {
-            // 向碰撞管理器注册自己
-            if (CollisionHelper.Instance != null)
-            {
-                CollisionHelper.Instance.RegisterEnemy(this);
-            }
+
         }
 
         private void OnEnable()
@@ -105,11 +101,7 @@ namespace GameLogic
                 CollisionManager.Instance.UnregisterCollider(Collider);
             }
 
-            // 从碰撞助手中注销
-            if (CollisionHelper.Instance != null)
-            {
-                CollisionHelper.Instance.UnregisterEnemy(this);
-            }
+
         }
 
         /// <summary>
@@ -122,7 +114,7 @@ namespace GameLogic
                 return; // 已经死亡，不再处理伤害
 
             Health -= damage;
-            // Log.Debug($"{gameObject.name} 受到 {damage} 点伤害，剩余生命值: {Health}");
+            Log.Debug($"{gameObject.name} 受到 {damage} 点伤害，剩余生命值: {Health}");
 
             if (Health <= 0)
             {
@@ -168,11 +160,7 @@ namespace GameLogic
             // 例如：播放死亡动画
             // GetComponent<Animator>().SetTrigger("Die");
 
-            // 从碰撞助手中注销
-            if (CollisionHelper.Instance != null)
-            {
-                CollisionHelper.Instance.UnregisterEnemy(this);
-            }
+
 
             // 触发死亡事件
             OnDeath?.Invoke();

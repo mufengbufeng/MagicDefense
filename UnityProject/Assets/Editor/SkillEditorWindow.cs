@@ -9,12 +9,12 @@ public class SkillEditorWindow : EditorWindow
     private SkillData _selectedSkill;
     private Vector2 _listScrollPos;
     private Vector2 _detailScrollPos;
-    private string _skillDataPath = "Assets/GameScripts/HotFix/GameLogic/DataConfigs/Skills";
+    private string _skillDataPath = "Assets/AssetRaw/Configs/SkillConfig";
 
-    [MenuItem("Tools/技能编辑器")]
+    [MenuItem("Tools/游戏配置/技能编辑器")]
     public static void ShowWindow()
     {
-        GetWindow<SkillEditorWindow>("技能编辑器");
+        GetWindow<SkillEditorWindow>("技能配置编辑器");
     }
 
     private void OnEnable()
@@ -45,7 +45,8 @@ public class SkillEditorWindow : EditorWindow
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
             SkillData skill = AssetDatabase.LoadAssetAtPath<SkillData>(path);
-            if (skill != null) _skillList.Add(skill);
+            if (skill != null)
+                _skillList.Add(skill);
         }
         _skillList.Sort((a, b) => a.SkillID.CompareTo(b.SkillID));
     }
@@ -53,10 +54,12 @@ public class SkillEditorWindow : EditorWindow
     void DrawSkillListPanel()
     {
         EditorGUILayout.BeginVertical(EditorStyles.helpBox, GUILayout.Width(200), GUILayout.ExpandHeight(true));
-        EditorGUILayout.LabelField("技能列表", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("技能配置列表", EditorStyles.boldLabel);
 
-        if (GUILayout.Button("创建新技能")) CreateNewSkill();
-        if (GUILayout.Button("刷新列表")) LoadSkillData();
+        if (GUILayout.Button("新建技能"))
+            CreateNewSkill();
+        if (GUILayout.Button("刷新列表"))
+            LoadSkillData();
 
         _listScrollPos = EditorGUILayout.BeginScrollView(_listScrollPos);
         foreach (SkillData skill in _skillList)
@@ -77,7 +80,7 @@ public class SkillEditorWindow : EditorWindow
 
         if (_selectedSkill != null)
         {
-            EditorGUILayout.LabelField($"编辑技能: {_selectedSkill.SkillID} - {_selectedSkill.SkillName}", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"正在编辑: ID {_selectedSkill.SkillID} - {_selectedSkill.SkillName}", EditorStyles.boldLabel);
             _detailScrollPos = EditorGUILayout.BeginScrollView(_detailScrollPos);
 
             SerializedObject serializedSkill = new SerializedObject(_selectedSkill);
@@ -87,8 +90,23 @@ public class SkillEditorWindow : EditorWindow
             bool enterChildren = true;
             while (prop.NextVisible(enterChildren))
             {
-                if (prop.name == "m_Script") continue;
-                EditorGUILayout.PropertyField(prop, true);
+                if (prop.name == "m_Script")
+                    continue;
+
+                // 锁定目标相关字段的条件显示
+                if (prop.name == "LockCondition" || prop.name == "TargetSortOrder" || prop.name == "MaxLockTargets")
+                {
+                    var targetingProp = serializedSkill.FindProperty("Targeting");
+                    if (targetingProp != null && targetingProp.enumValueIndex == (int)TargetingType.LockOn)
+                    {
+                        EditorGUILayout.PropertyField(prop, true);
+                    }
+                }
+                else
+                {
+                    EditorGUILayout.PropertyField(prop, true);
+                }
+
                 enterChildren = false;
             }
 
@@ -98,10 +116,11 @@ public class SkillEditorWindow : EditorWindow
             }
 
             EditorGUILayout.Space();
-            if (GUILayout.Button("保存更改")) AssetDatabase.SaveAssets();
-            if (GUILayout.Button("删除此技能", GUILayout.Width(100)))
+            if (GUILayout.Button("保存配置"))
+                AssetDatabase.SaveAssets();
+            if (GUILayout.Button("删除配置", GUILayout.Width(100)))
             {
-                if (EditorUtility.DisplayDialog("确认删除", $"确定要删除技能 {_selectedSkill.SkillID}: {_selectedSkill.SkillName} 吗？", "删除", "取消"))
+                if (EditorUtility.DisplayDialog("确认删除", $"确定要删除技能配置 {_selectedSkill.SkillID}: {_selectedSkill.SkillName} 吗？", "删除", "取消"))
                 {
                     DeleteSkill(_selectedSkill);
                 }
@@ -121,7 +140,7 @@ public class SkillEditorWindow : EditorWindow
     {
         SkillData newSkill = CreateInstance<SkillData>();
         newSkill.SkillID = FindNextAvailableID();
-        newSkill.SkillName = "新技能_" + newSkill.SkillID;
+        newSkill.SkillName = "未命名技能_" + newSkill.SkillID;
 
         string path = Path.Combine(_skillDataPath, $"Skill_{newSkill.SkillID}.asset");
         path = AssetDatabase.GenerateUniqueAssetPath(path);
@@ -148,9 +167,10 @@ public class SkillEditorWindow : EditorWindow
     int FindNextAvailableID()
     {
         int maxID = 0;
-        foreach(var skill in _skillList)
+        foreach (var skill in _skillList)
         {
-            if(skill.SkillID > maxID) maxID = skill.SkillID;
+            if (skill.SkillID > maxID)
+                maxID = skill.SkillID;
         }
         return maxID + 1;
     }

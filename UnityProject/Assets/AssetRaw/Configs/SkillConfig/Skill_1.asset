@@ -10,30 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15aedc700e615514d9a287f77d2966ef, type: 3}
-  m_Name: Skill_2
+  m_Name: Skill_1
   m_EditorClassIdentifier: 
-  SkillID: 2
-  SkillName: "\u65B0\u6280\u80FD_2"
-  Description: 
-  Icon: {fileID: 0}
+  SkillID: 1
+  SkillName: "\u666E\u901A\u653B\u51FB"
+  Description: "\u666E\u901A\u653B\u51FB"
+  Icon: {fileID: 21300000, guid: f9a06e163014f4f46b14f4499d3e7240, type: 3}
+  Prefab: {fileID: 5119332033816293917, guid: 024d06969cc8a264eb40913fcb1ffdfb, type: 3}
   Type: 0
   Target: 1
-  Faction: 0
-  Targeting: 1
+  Targeting: 2
+  LockCondition: 1
+  TargetSortOrder: 0
   Cast: 1
-  Cooldown: 1
+  Cooldown: 100
   ManaCost: 0
-  CastTime: 0
-  Range: 5
+  CastTime: 1000
+  Range: 10
   EffectRadius: 0
   EffectAngle: 360
   Duration: 0
   EffectValue: 10
-  TickRate: 0
-  MaxTargets: 1
-  AssociatedPrefab: {fileID: 0}
-  HitEffectPrefabName: 
-  CastSoundName: 
-  HitSoundName: 
+  SelfBuff: 
+  TriggerSkills: 
+  Priority: 0
   Interruptible: 1
   RequiresLineOfSight: 1

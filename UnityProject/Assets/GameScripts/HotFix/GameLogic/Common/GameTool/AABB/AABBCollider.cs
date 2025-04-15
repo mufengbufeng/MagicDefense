@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace GameLogic
@@ -8,16 +9,18 @@ namespace GameLogic
     public class AABBCollider : MonoBehaviour
     {
         [Tooltip("碰撞体大小")]
-        public Vector2 size = Vector2.one;
+        public Vector2 Size = Vector2.one;
         [Tooltip("碰撞体相对于GameObject中心的偏移量")]
-        public Vector2 offset = Vector2.zero;
+        public Vector2 Offset = Vector2.zero;
         [Tooltip("碰撞体类型")]
         public ColliderType type;
+
+        private bool IsUse = true; // 是否启用碰撞体
 
         /// <summary>
         /// 碰撞发生时的回调委托
         /// </summary>
-        public System.Action<AABBCollider> onCollisionEnter;
+        public Action<AABBCollider> OnCollisionEnter;
 
         private void Start()
         {
@@ -42,9 +45,9 @@ namespace GameLogic
         public Bounds2D GetBounds()
         {
             // 计算世界空间中的中心点
-            Vector2 worldCenter = (Vector2)transform.position + offset;
+            Vector2 worldCenter = (Vector2)transform.position + Offset;
             // 计算半尺寸
-            Vector2 halfSize = size * 0.5f;
+            Vector2 halfSize = Size * 0.5f;
 
             return new Bounds2D
             {

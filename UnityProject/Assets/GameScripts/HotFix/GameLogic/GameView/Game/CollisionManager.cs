@@ -105,8 +105,8 @@ namespace GameLogic
                     {
                         // Log.Debug($"Collision detected between {bullet.gameObject.name} and {enemy.gameObject.name}");
                         // 触发碰撞双方的回调事件
-                        bullet.onCollisionEnter?.Invoke(enemy);
-                        enemy.onCollisionEnter?.Invoke(bullet);
+                        bullet.OnCollisionEnter?.Invoke(enemy);
+                        enemy.OnCollisionEnter?.Invoke(bullet);
 
                         // 检查回调后对象是否仍然有效，因为回调可能销毁了对象
                         // 如果子弹在回调中被销毁/回收，则跳出内层循环，处理下一个子弹

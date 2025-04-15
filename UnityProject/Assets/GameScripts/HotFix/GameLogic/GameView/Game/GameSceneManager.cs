@@ -18,6 +18,7 @@
 
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameBase;
 using GameConfig;
@@ -105,23 +106,7 @@ namespace GameLogic
             LoadEnemyAsync(_EnemyCancel).Forget();
         }
 
-        // private void Update()
-        // {
-        //     // 每秒生成一个敌人
-        //     if (_startSpawnEnemy)
-        //     {
-        //         _enemySpawnTimer += Time.deltaTime;
-        //         if (_enemySpawnTimer >= ENEMY_SPAWN_INTERVAL)
-        //         {
-        //             _enemySpawnTimer = 0f;
-        //             // 检查敌人数量上限
-        //             if (EnemyEntities.Count < MAX_ENEMY_COUNT)
-        //             {
-        //                 SpawnEnemy();
-        //             }
-        //         }
-        //     }
-        // }
+
 
         private async UniTask LoadEnemyAsync(CancellationTokenSource token)
         {
@@ -144,7 +129,13 @@ namespace GameLogic
         {
             // 生成敌人，使用"Enemy"作为默认名称
             LoadEnemy("Enemy1").Forget();
-            Log.Debug("生成了一个敌人");
+            // Log.Debug("生成了一个敌人");
+        }
+
+        public async Task<GameObject> LoadObj(string name)
+        {
+            GameObject obj = await PoolManager.Instance.GetGameObjectAsync(name, Unit.transform);
+            return obj;
         }
 
         /// <summary>
@@ -158,7 +149,7 @@ namespace GameLogic
         {
             var player = await PoolManager.Instance.GetGameObjectAsync("Player", Unit.transform);
             player.transform.localPosition = new Vector3(PlayerRoot.transform.position.x, PlayerRoot.transform.position.y, 0);
-            player.GetOrAddComponent<PlayerEntity>();
+            PlayerEntity = player.GetOrAddComponent<PlayerEntity>();
         }
 
         private async UniTask LoadEnemy(string name)
